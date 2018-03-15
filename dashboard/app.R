@@ -18,7 +18,7 @@ ui <- navbarPage("Sales Dashboard",theme = shinytheme("flatly"),
    )
 ),
 
-  tabPanel("Sales Breakdown",
+  tabPanel("Revenue Breakdown",
            sidebarLayout(
              sidebarPanel(
                radioButtons("yearInput","Year",choices=c("2013","2014","2015","2016"),selected="2013"),
