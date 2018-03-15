@@ -5,7 +5,6 @@ library(shinythemes)
 
 sales <- read_csv("sales_data.csv")
 
-
 ui <- navbarPage("Sales Dashboard",theme = shinytheme("flatly"),
    
   tabPanel("Yearly Revenue",
@@ -22,12 +21,13 @@ ui <- navbarPage("Sales Dashboard",theme = shinytheme("flatly"),
   tabPanel("Sales Breakdown",
            sidebarLayout(
              sidebarPanel(
+               radioButtons("yearInput","Year",choices=c("2013","2014","2015","2016"),selected="2013"),
+                
                selectInput("productInput","Product Type",choices = c("Accessories","Clothing","Bikes")),
                
                radioButtons("ageInput","Age Group",choices=c("Youth (<25)","Adults (35-64)","Young Adults (25-34)","Seniors (64+)"),
-                            selected = "Youth (<25)"),
-               
-               radioButtons("yearInput","Year",choices=c("2013","2014","2015","2016"),selected="2013")
+                            selected = "Youth (<25)")           
+              
              ),
              
              mainPanel(plotlyOutput("TotalSales",height = "600"),width = 7)
@@ -61,10 +61,9 @@ server <- function(input, output) {
       layout(legend=list(x=100,y=0.7))
   })
   
-  
   #create data set  
   total_sales <- sales %>% 
-      group_by(Year,Country,`Age Group`,`Product Category`) %>% 
+      group_by(Year,Country,`Product Category``Age Group`) %>% 
       summarise(total=sum(Revenue)) 
     
    #make it reactive 
