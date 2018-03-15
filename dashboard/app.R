@@ -14,7 +14,6 @@ ui <- navbarPage("Sales Dashboard",theme = shinytheme("flatly"),
                   column(12,
                          h6("*Double click on a Country to isolate or single click to remove it from graph")
                          
-    
          )
       )
    )
@@ -45,7 +44,7 @@ ui <- navbarPage("Sales Dashboard",theme = shinytheme("flatly"),
                mainPanel(plotlyOutput("bike_sales"),width="130%",height="200%")
                     
            )
-           )
+   )
  
 
 #--------SERVER--------#
@@ -87,10 +86,11 @@ server <- function(input, output) {
   
   #spread Sub Category for plotly bar chart
   bike_quantity <- spread(bike_quantity,`Sub Category`,total)
+  #reorder levels 
   bike_quantity$Month <- factor(bike_quantity$Month,
                                 levels=c("January","February","March","April","May","June","July","August",
                                          "September","October","November","December"))
-  #make it reactive
+  #make data reactive
   bike_sales <- reactive({bike_quantity %>% 
         filter(Country==input$countryInput)
                
